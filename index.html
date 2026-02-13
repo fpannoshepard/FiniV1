@@ -6,14 +6,11 @@
   <title>BA Swap</title>
   <meta name="color-scheme" content="dark" />
 
-  <!-- BA icon (from your uploaded symbol) -->
-  <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA...REDACTED_FOR_DISPLAY..."/>
+  <!-- Favicon (Blockchain Association logo) -->
+  <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABKAAAAL2CAYAAABfH3jGAAAB..." />
 
   <style>
     :root{
-      /* ===== Brand logo as a CSS var ===== */
-      --ba-logo: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA...PASTE_FULL_BASE64_FROM_BELOW...");
-
       --bg0:#060a14;
       --bg1:#0b1022;
       --text:#eaf0ff;
@@ -67,18 +64,19 @@
       display:flex;align-items:center;justify-content:space-between;gap:12px;
     }
     .brand{display:flex;align-items:center;gap:12px;user-select:none;}
-
-    /* ===== Replace the square logo with your BA symbol ===== */
     .logo{
       width:40px;height:40px;border-radius:12px;
-      background-image: var(--ba-logo);
-      background-size: cover;
-      background-position:center;
-      background-repeat:no-repeat;
+      background: rgba(255,255,255,.04);
       box-shadow: 0 10px 18px rgba(0,0,0,.35);
       outline: 1px solid rgba(255,255,255,.08);
+      overflow:hidden;
+      display:flex;align-items:center;justify-content:center;
     }
-
+    .logo img{
+      width:100%;height:100%;
+      object-fit:cover;
+      display:block;
+    }
     .brand h1{font-size:15px;margin:0;letter-spacing:.2px;font-weight:800;}
     .brand span{display:block;font-size:12px;color:var(--muted2);margin-top:2px;font-weight:600;}
     .nav-right{display:flex;align-items:center;gap:10px;}
@@ -123,7 +121,6 @@
       cursor:pointer;
       transition: transform var(--t), background var(--t), border-color var(--t);
       font-weight:750;font-size:13px;
-      position:relative;
     }
     .ghost-btn:hover{background:rgba(255,255,255,.06);transform:translateY(-1px);}
     .ghost-btn:active{transform:translateY(0px);}
@@ -135,27 +132,10 @@
       cursor:pointer;font-weight:850;letter-spacing:.2px;font-size:14px;width:100%;
       transition: transform var(--t), filter var(--t), opacity var(--t);
       box-shadow: 0 16px 30px rgba(47,123,255,.18);
-      position:relative;
     }
     .primary:hover{filter:brightness(1.06);transform:translateY(-1px);}
     .primary:active{transform:translateY(0px);}
     .primary:disabled{opacity:.55;cursor:not-allowed;transform:none;filter:none;}
-
-    /* ===== Brand integration: add BA icon into key buttons ===== */
-    .has-brand{padding-left:44px;}
-    .has-brand::before{
-      content:"";
-      position:absolute;
-      left:14px; top:50%;
-      transform:translateY(-50%);
-      width:22px;height:22px;border-radius:8px;
-      background-image: var(--ba-logo);
-      background-size:cover;
-      background-position:center;
-      background-repeat:no-repeat;
-      outline:1px solid rgba(255,255,255,.10);
-      box-shadow: 0 8px 16px rgba(0,0,0,.28);
-    }
 
     .panel{
       background: rgba(0,0,0,.16);
@@ -190,10 +170,16 @@
       border: 1px solid rgba(47,123,255,.35);
       box-shadow:0 10px 18px rgba(0,0,0,.25);
       flex:none;
+      overflow:hidden;
     }
     .ticon.dark{
       background: rgba(255,255,255,.08);
       border-color: rgba(255,255,255,.12);
+    }
+    .ticon img{
+      width:100%;height:100%;
+      object-fit:contain;
+      display:block;
     }
 
     .amt{flex:1;text-align:right;}
@@ -228,25 +214,35 @@
       transition: opacity var(--t), transform var(--t);
     }
     .modal-backdrop.show .modal{transform: translateY(0) scale(1);opacity:1;}
-
-    /* ===== Modal header with hazard/alert icon ===== */
     .modal-hd{
       padding:18px 18px 12px;
       display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
       border-bottom:1px solid rgba(255,255,255,.06);
     }
-    .modal-hd-left{display:flex;align-items:flex-start;gap:12px;min-width:0;}
-    .modal-icon{
-      width:42px;height:42px;border-radius:14px;
-      display:flex;align-items:center;justify-content:center;
-      flex:none;
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.10);
-      box-shadow: 0 14px 30px rgba(0,0,0,.35);
+
+    /* Title now includes an icon */
+    .modal-title{
+      margin:0;
+      font-size:18px;
+      font-weight:950;
+      letter-spacing:.1px;
+      line-height:1.2;
+      display:flex;
+      align-items:flex-start;
+      gap:10px;
     }
-    .modal-title{margin:0;font-size:18px;font-weight:950;letter-spacing:.1px;line-height:1.2;word-break:break-word;}
     .modal-title.danger{color:var(--danger);}
     .modal-title.warn{color:var(--warn);}
+    .modal-ico{
+      width:26px;height:26px;border-radius:10px;
+      display:inline-flex;align-items:center;justify-content:center;
+      flex:none;margin-top:1px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.10);
+    }
+    .modal-ico.warn{background: rgba(255,204,102,.12);border-color: rgba(255,204,102,.26);}
+    .modal-ico.danger{background: rgba(255,59,59,.12);border-color: rgba(255,59,59,.26);}
+    .modal-ico svg{display:block}
 
     .modal-x{
       background: rgba(255,255,255,.05);
@@ -258,7 +254,6 @@
     }
     .modal-x:hover{background:rgba(255,255,255,.07);transform:translateY(-1px);}
     .modal-bd{padding:16px 18px 18px;color:rgba(234,240,255,.86);line-height:1.55;font-size:14px;}
-
     .bullets{
       margin:14px 0 0;padding:0;list-style:none;
       border:1px solid rgba(255,255,255,.08);
@@ -268,17 +263,13 @@
       display:flex;gap:10px;padding:12px 12px;border-top:1px solid rgba(255,255,255,.06);align-items:flex-start;
     }
     .bullets li:first-child{border-top:none;}
-
-    /* Flag container now supports SVG hazard/alert */
     .flag{
-      width:22px;height:22px;border-radius:8px;
+      width:18px;height:18px;border-radius:6px;
       background:rgba(255,255,255,.06);
       border:1px solid rgba(255,255,255,.10);
-      display:flex;align-items:center;justify-content:center;
-      flex:none;margin-top:1px;
+      display:flex;align-items:center;justify-content:center;flex:none;margin-top:1px;
+      font-weight:900;font-size:11px;color:rgba(234,240,255,.85);
     }
-    .flag svg{display:block}
-
     .muted{
       color: rgba(234,240,255,.62);
       font-size: 12px;
@@ -385,6 +376,7 @@
       outline-offset:2px;
     }
 
+    /* Compliance notice styles kept */
     .notice{
       border: 1px solid rgba(255,255,255,.10);
       background: rgba(0,0,0,.18);
@@ -435,7 +427,10 @@
   <header>
     <div class="nav">
       <div class="brand">
-        <div class="logo" aria-hidden="true"></div>
+        <!-- Main company logo replaced with Blockchain Association logo -->
+        <div class="logo" aria-hidden="true">
+          <img id="companyLogo" alt="Blockchain Association" />
+        </div>
         <div>
           <h1>BA Swap <span>Demo Decentralized Exchange Interface</span></h1>
         </div>
@@ -446,7 +441,7 @@
           <span class="dot"></span>
           <span id="pillText">Connected</span>
         </div>
-        <button class="ghost-btn has-brand" id="connectBtn" type="button">Blockchain Association</button>
+        <button class="ghost-btn" id="connectBtn" type="button">Blockchain Association</button>
       </div>
     </div>
   </header>
@@ -462,7 +457,7 @@
             </div>
           </div>
 
-          <button class="primary has-brand" id="connectPrimary" type="button">Connect Wallet</button>
+          <button class="primary" id="connectPrimary" type="button">Connect Wallet</button>
           <p class="fineprint">This is a front-end prototype for demonstrating user flow and warning screens.</p>
         </div>
       </section>
@@ -548,9 +543,9 @@
             </div>
           </div>
 
-          <button class="primary has-brand" id="swapBtn" type="button" disabled>Enter amount</button>
+          <button class="primary" id="swapBtn" type="button" disabled>Enter amount</button>
 
-          <!-- REMOVED: "No warnings for Lindsay. Brian swaps are blocked at execution time." -->
+          <!-- Removed: "No warnings for Lindsay..." -->
         </div>
       </section>
     </div>
@@ -560,10 +555,11 @@
 <div class="modal-backdrop" id="modalBackdrop" role="dialog" aria-modal="true" aria-hidden="true">
   <div class="modal" role="document">
     <div class="modal-hd">
-      <div class="modal-hd-left">
-        <div class="modal-icon" id="modalIcon" aria-hidden="true"></div>
-        <h3 class="modal-title" id="modalTitle">Title</h3>
-      </div>
+      <!-- Title now supports an icon -->
+      <h3 class="modal-title" id="modalTitle">
+        <span class="modal-ico" id="modalIco" aria-hidden="true"></span>
+        <span id="modalTitleText">Title</span>
+      </h3>
       <button class="modal-x" id="modalCloseX" type="button" aria-label="Close">✕</button>
     </div>
     <div class="modal-bd" id="modalBody"></div>
@@ -581,13 +577,30 @@
     </div>
   </div>
   <div class="back">
-    <button class="ghost-btn has-brand" type="button" onclick="hideSuccess()">Back</button>
+    <button class="ghost-btn" type="button" onclick="hideSuccess()">Back</button>
   </div>
 </div>
 
 <script>
-  // ===== Brand asset (kept in CSS var; also available if needed) =====
-  const BA_LOGO_DATA_URI = getComputedStyle(document.documentElement).getPropertyValue("--ba-logo").trim();
+  /***********************
+   * EMBEDDED IMAGE ASSETS
+   * (Self-contained via data URIs)
+   ***********************/
+  const ASSETS = {
+    COMPANY_LOGO: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABKAAAAL2CAYAAABfH3jGAAAB...REPLACE_WITH_FULL_BASE64...",
+    BTC: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABAAAAAQACAIAAADwf7zUAAAB...REPLACE_WITH_FULL_BASE64...",
+    USDC: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAIAAAD7GO2jAAAB...REPLACE_WITH_FULL_BASE64...",
+    A7A5: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAIAAAD7GO2jAAAB...REPLACE_WITH_FULL_BASE64...",
+    DUTCH: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIj48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2ZmZiIvPjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iNjYuNjY2NyIgZmlsbD0iI2FlMWMyYiIvPjxyZWN0IHk9IjEzMy4zMzMzIiB3aWR0aD0iMzAwIiBoZWlnaHQ9IjY2LjY2NjciIGZpbGw9IiMyMTQ2OGYiLz48L3N2Zz4="
+  };
+
+  // IMPORTANT:
+  // The ASSETS.* strings above are placeholders in this snippet.
+  // Replace each "...REPLACE_WITH_FULL_BASE64..." with the full data URIs.
+  // (If you don’t want base64, use normal file paths like "assets/btc.png" instead.)
+
+  // Set the main company logo in the header
+  document.getElementById("companyLogo").src = ASSETS.COMPANY_LOGO;
 
   const PRICES = {
     "ETH": 2000,
@@ -610,26 +623,43 @@
 
   const RECIPIENTS = ["Lindsay", "Brian"];
 
-  const ICON_TEXT = {
-    "ETH": "Ξ",
-    "USDC": "U",
-    "BTC": "₿",
-    "A7A5": "A7",
-    "McLarencoin": "MC",
-    "Murphycoin": "MU",
-    "Dutchcoin": "DU",
-    "Germcoin": "GE",
-    "Sprucecoin": "SP",
-    "Nistlercoin": "NI",
-    "Meadowlarkcoin": "ME",
+  /***********************
+   * TOKEN ICONS
+   * - Replaced:
+   *   BTC with Bitcoin logo
+   *   USDC with USDC logo
+   *   A7A5 with A7A5 logo
+   *   Dutchcoin with Dutch flag
+   ***********************/
+  const ICONS = {
+    "ETH": { type: "text", value: "Ξ" },
+    "USDC": { type: "img",  value: ASSETS.USDC },
+    "BTC":  { type: "img",  value: ASSETS.BTC },
+    "A7A5": { type: "img",  value: ASSETS.A7A5 },
+    "Dutchcoin": { type: "img", value: ASSETS.DUTCH },
+
+    // Leave others as text (or add more images later)
+    "McLarencoin": { type: "text", value: "MC" },
+    "Murphycoin":  { type: "text", value: "MU" },
+    "Germcoin":    { type: "text", value: "GE" },
+    "Sprucecoin":  { type: "text", value: "SP" },
+    "Nistlercoin": { type: "text", value: "NI" },
+    "Meadowlarkcoin": { type: "text", value: "ME" }
   };
+
+  function iconHTML(token){
+    const spec = ICONS[token];
+    if (!spec) return `<span>${escapeHtml((token||"?").slice(0,2).toUpperCase())}</span>`;
+    if (spec.type === "img") return `<img alt="${escapeHtml(token)}" src="${spec.value}">`;
+    return `<span>${escapeHtml(spec.value)}</span>`;
+  }
+
+  const $ = (id) => document.getElementById(id);
 
   let connected = false;
   let fromToken = null;
   let toToken = "USDC";
   let recipient = null;
-
-  const $ = (id) => document.getElementById(id);
 
   // ===== PATCH STATE: cancel pending modal close teardown =====
   let modalCloseTimer = null;
@@ -638,58 +668,6 @@
     return String(str).replace(/[&<>"']/g, s => ({
       "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
     }[s]));
-  }
-
-  // ===== Hazard / Alert / Info SVGs =====
-  function svgHazard(color="rgba(255,204,102,.95)"){
-    return `
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M12 3.2L1.9 20.8c-.4.7.1 1.6.9 1.6h18.4c.8 0 1.3-.9.9-1.6L12 3.2z" stroke="${color}" stroke-width="2"/>
-        <path d="M12 9v6" stroke="${color}" stroke-width="2" stroke-linecap="round"/>
-        <path d="M12 18h.01" stroke="${color}" stroke-width="3" stroke-linecap="round"/>
-      </svg>
-    `;
-  }
-
-  function svgAlert(color="rgba(255,59,59,.95)"){
-    return `
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M7.4 2.7h9.2l4.7 4.7v9.2l-4.7 4.7H7.4L2.7 16.6V7.4L7.4 2.7z" stroke="${color}" stroke-width="2"/>
-        <path d="M12 8v6" stroke="${color}" stroke-width="2" stroke-linecap="round"/>
-        <path d="M12 18h.01" stroke="${color}" stroke-width="3" stroke-linecap="round"/>
-      </svg>
-    `;
-  }
-
-  function svgInfo(color="rgba(47,123,255,.95)"){
-    return `
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z" stroke="${color}" stroke-width="2"/>
-        <path d="M12 10.5v6" stroke="${color}" stroke-width="2" stroke-linecap="round"/>
-        <path d="M12 7.2h.01" stroke="${color}" stroke-width="3" stroke-linecap="round"/>
-      </svg>
-    `;
-  }
-
-  function setModalIconByTone(tone){
-    const iconEl = $("modalIcon");
-    if (!iconEl) return;
-
-    if (tone === "danger") {
-      iconEl.style.background = "rgba(255,59,59,.12)";
-      iconEl.style.borderColor = "rgba(255,59,59,.26)";
-      iconEl.innerHTML = svgAlert();
-      return;
-    }
-    if (tone === "warn") {
-      iconEl.style.background = "rgba(255,204,102,.14)";
-      iconEl.style.borderColor = "rgba(255,204,102,.30)";
-      iconEl.innerHTML = svgHazard();
-      return;
-    }
-    iconEl.style.background = "rgba(47,123,255,.12)";
-    iconEl.style.borderColor = "rgba(47,123,255,.26)";
-    iconEl.innerHTML = svgInfo();
   }
 
   function setConnectedUI() {
@@ -703,6 +681,44 @@
     recalc();
   }
 
+  /***********************
+   * MODAL ICONS (Hazard / Alert)
+   * Added to all token popups via tone.
+   ***********************/
+  function modalIcoSVG(tone){
+    if (tone === "danger") {
+      return `
+        <span class="modal-ico danger">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+            <path d="M12 3.2L1.9 20.8c-.4.7.1 1.6.9 1.6h18.4c.8 0 1.3-.9.9-1.6L12 3.2z"
+                  stroke="rgba(255,59,59,.95)" stroke-width="2" />
+            <path d="M12 9v5" stroke="rgba(255,59,59,.95)" stroke-width="2" stroke-linecap="round"/>
+            <path d="M12 17.2h.01" stroke="rgba(255,59,59,.95)" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+        </span>`;
+    }
+    if (tone === "warn") {
+      return `
+        <span class="modal-ico warn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+            <path d="M12 3.2L1.9 20.8c-.4.7.1 1.6.9 1.6h18.4c.8 0 1.3-.9.9-1.6L12 3.2z"
+                  stroke="rgba(255,204,102,.95)" stroke-width="2" />
+            <path d="M12 9v5" stroke="rgba(255,204,102,.95)" stroke-width="2" stroke-linecap="round"/>
+            <path d="M12 17.2h.01" stroke="rgba(255,204,102,.95)" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+        </span>`;
+    }
+    // default/info
+    return `
+      <span class="modal-ico">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+          <path d="M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20z" stroke="rgba(234,240,255,.70)" stroke-width="2"/>
+          <path d="M12 10v7" stroke="rgba(234,240,255,.70)" stroke-width="2" stroke-linecap="round"/>
+          <path d="M12 7.2h.01" stroke="rgba(234,240,255,.70)" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+      </span>`;
+  }
+
   // ===== Modal controller (PATCHED) =====
   function openModal({ title, tone = "default", bodyHtml = "", buttons = [] }) {
     // Cancel any delayed teardown from a previous close
@@ -711,9 +727,14 @@
       modalCloseTimer = null;
     }
 
-    $("modalTitle").textContent = title;
-    $("modalTitle").className = "modal-title" + (tone === "danger" ? " danger" : tone === "warn" ? " warn" : "");
-    setModalIconByTone(tone);
+    // Title text + hazard/alert icon
+    $("modalTitleText").textContent = title;
+
+    const toneClass = (tone === "danger" ? " danger" : tone === "warn" ? " warn" : "");
+    $("modalTitle").className = "modal-title" + toneClass;
+
+    // Set icon bubble
+    $("modalIco").outerHTML = modalIcoSVG(tone).replace('class="modal-ico', 'class="modal-ico' + (tone === "danger" ? " danger" : tone === "warn" ? " warn" : "") + '"');
 
     $("modalBody").innerHTML = bodyHtml;
 
@@ -770,7 +791,7 @@
         return `
           <div class="item" data-name="${escapeHtml(name)}">
             <div class="item-left">
-              <span class="ticon">${escapeHtml(ICON_TEXT[name] || name.slice(0,2).toUpperCase())}</span>
+              <span class="ticon">${iconHTML(name)}</span>
               <div class="item-name">${escapeHtml(name)}</div>
             </div>
             <div class="right-mini">$${fmtPrice(price)}</div>
@@ -791,7 +812,7 @@
       `;
     }
 
-    openModal({ title, bodyHtml: renderList(), buttons: [{ label: "Close", onClick: () => closeModal() }] });
+    openModal({ title, tone: "default", bodyHtml: renderList(), buttons: [{ label: "Close", onClick: () => closeModal() }] });
 
     const searchEl = document.getElementById("pickerSearch");
     searchEl.focus();
@@ -801,8 +822,6 @@
       els.forEach(el => {
         el.addEventListener("click", () => {
           const name = el.getAttribute("data-name");
-
-          // Close picker immediately (no delayed teardown), then open warnings.
           closeModal(true);
           setTimeout(() => onPick(name), 0);
         });
@@ -823,18 +842,13 @@
     return `<div class="muted">Powered by Blockaid (simulated)</div>`;
   }
 
-  // ===== Token warning popups now include hazard/alert symbols =====
   function warn_NotAvailable_A7A5() {
     openModal({
       title: "Not available",
       tone: "warn",
       bodyHtml: `
         <p style="color:rgba(234,240,255,.85)">You can’t trade this token using the interface.</p>
-        <ul class="bullets">
-          <li><span class="flag">${svgHazard()}</span><div>Unavailable at this time</div></li>
-          <li><span class="flag">${svgHazard()}</span><div>Delisted for sanctions-risk association (simulated)</div></li>
-        </ul>
-        <p style="margin-top:12px">
+        <p>
           Unavailable at this time: Uniswap delists tokens deemed to be developed or backed by sanctioned entities,
           such as A7A5 which is Russian-based and backed by the ruble.
         </p>
@@ -851,8 +865,8 @@
       bodyHtml: `
         <p><strong>${escapeHtml(tokenName)}</strong> has been flagged as malicious. Always do your own research before proceeding.</p>
         <ul class="bullets">
-          <li><span class="flag">${svgAlert()}</span><div>Flagged as malicious</div></li>
-          <li><span class="flag">${svgAlert()}</span><div>Not listed on leading U.S. exchanges</div></li>
+          <li><span class="flag">!</span><div>Flagged as malicious</div></li>
+          <li><span class="flag">!</span><div>Not listed on leading U.S. exchanges</div></li>
         </ul>
         ${poweredByBlockaid()}
       `,
@@ -870,8 +884,8 @@
       bodyHtml: `
         <p><strong>${escapeHtml(tokenName)}</strong> has been flagged as unsellable. Swapping this token may result in a loss of your funds.</p>
         <ul class="bullets">
-          <li><span class="flag">${svgAlert()}</span><div>Charges <span style="color:var(--danger);font-weight:950;">100%</span> fee when sold</div></li>
-          <li><span class="flag">${svgAlert()}</span><div>Not listed on leading U.S. exchanges</div></li>
+          <li><span class="flag">%</span><div>Charges <span style="color:var(--danger);font-weight:950;">100%</span> fee when sold</div></li>
+          <li><span class="flag">!</span><div>Not listed on leading U.S. exchanges</div></li>
         </ul>
         ${poweredByBlockaid()}
       `,
@@ -888,10 +902,6 @@
       tone: "warn",
       bodyHtml: `
         <p><strong>${escapeHtml(tokenName)}</strong> has been flagged for attempting to impersonate a different token.</p>
-        <ul class="bullets">
-          <li><span class="flag">${svgHazard()}</span><div>Name/branding collision risk</div></li>
-          <li><span class="flag">${svgHazard()}</span><div>Verify contract address before swapping</div></li>
-        </ul>
         <p>It may not be the token you intend to swap. Use the contract address to be sure you are swapping the token you intend to.</p>
         ${poweredByBlockaid()}
       `,
@@ -908,11 +918,7 @@
       tone: "danger",
       bodyHtml: `
         <p><strong>${escapeHtml(tokenName)}</strong> has been flagged as a potential honeypot token.</p>
-        <ul class="bullets">
-          <li><span class="flag">${svgAlert()}</span><div>May prevent selling or impose hidden restrictions</div></li>
-          <li><span class="flag">${svgAlert()}</span><div>Loss of funds risk if swapped</div></li>
-        </ul>
-        <p>Always do your own research before proceeding.</p>
+        <p>This token may prevent selling or impose hidden restrictions. Always do your own research before proceeding.</p>
         ${poweredByBlockaid()}
       `,
       buttons: [
@@ -928,10 +934,7 @@
       tone: "warn",
       bodyHtml: `
         <p><strong>${escapeHtml(tokenName)}</strong> has been flagged as a potential spam token based on onchain airdrop activity.</p>
-        <ul class="bullets">
-          <li><span class="flag">${svgHazard()}</span><div>Unsolicited airdrop / spam patterns</div></li>
-          <li><span class="flag">${svgHazard()}</span><div>Proceed with caution</div></li>
-        </ul>
+        <p>Always do your own research before proceeding.</p>
         ${poweredByBlockaid()}
       `,
       buttons: [
@@ -947,10 +950,6 @@
       tone: "danger",
       bodyHtml: `
         <p><strong>${escapeHtml(tokenName)}</strong> charges a high fee when bought or sold.</p>
-        <ul class="bullets">
-          <li><span class="flag">${svgAlert()}</span><div>High fee can erase value</div></li>
-          <li><span class="flag">${svgAlert()}</span><div>Loss of funds risk if swapped</div></li>
-        </ul>
         <p>Swapping this token may result in a loss of your funds.</p>
         ${poweredByBlockaid()}
       `,
@@ -967,10 +966,6 @@
       tone: "warn",
       bodyHtml: `
         <p><strong>${escapeHtml(tokenName)}</strong> is not traded on a leading U.S. centralized exchange such as Coinbase, Kraken, or Gemini.</p>
-        <ul class="bullets">
-          <li><span class="flag">${svgHazard()}</span><div>Lower liquidity / higher manipulation risk</div></li>
-          <li><span class="flag">${svgHazard()}</span><div>Extra diligence recommended</div></li>
-        </ul>
         ${poweredByBlockaid()}
       `,
       buttons: [
@@ -989,10 +984,6 @@
           Blockaid has simulated this transaction before it has been executed and determined that the order called by you and executed by the counterparty are different.
           This transaction and all associated funds have been frozen
         </p>
-        <ul class="bullets">
-          <li><span class="flag">${svgAlert()}</span><div>Execution mismatch detected</div></li>
-          <li><span class="flag">${svgAlert()}</span><div>Funds frozen (simulated)</div></li>
-        </ul>
         ${poweredByBlockaid()}
       `,
       buttons: [{ label: "Close", primary: true, onClick: () => closeModal() }]
@@ -1013,7 +1004,7 @@
   function setFromToken(name){
     fromToken = name;
     $("fromTokenName").textContent = name || "Select token";
-    $("fromIcon").textContent = ICON_TEXT[name] || "?";
+    $("fromIcon").innerHTML = name ? iconHTML(name) : "?";
     $("fromHint").textContent = name ? `Price: $${fmtPrice(PRICES[name])}` : "Price: —";
     refreshSwapButton();
     recalc();
@@ -1021,7 +1012,7 @@
   function setToToken(name){
     toToken = name;
     $("toTokenName").textContent = name || "Select token";
-    $("toIcon").textContent = ICON_TEXT[name] || "T";
+    $("toIcon").innerHTML = name ? iconHTML(name) : "T";
     refreshSwapButton();
     recalc();
   }
@@ -1083,7 +1074,7 @@
   }
   window.hideSuccess = hideSuccess;
 
-  // ===== Compliance modal =====
+  // Compliance modal
   function showComplianceModal() {
     openModal({
       title: "Compliance notice",
@@ -1092,7 +1083,12 @@
         <div class="notice">
           <div class="notice-header">
             <div class="hazard" aria-hidden="true">
-              ${svgHazard()}
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                <path d="M12 3.2L1.9 20.8c-.4.7.1 1.6.9 1.6h18.4c.8 0 1.3-.9.9-1.6L12 3.2z"
+                      stroke="rgba(255,204,102,.95)" stroke-width="2" />
+                <path d="M12 9v5" stroke="rgba(255,204,102,.95)" stroke-width="2" stroke-linecap="round"/>
+                <path d="M12 17.2h.01" stroke="rgba(255,204,102,.95)" stroke-width="3" stroke-linecap="round"/>
+              </svg>
             </div>
             <div>
               <p class="notice-title">
@@ -1113,7 +1109,10 @@
 
               <div class="warn-line">
                 <div class="warn-ico warn" aria-hidden="true">
-                  ${svgHazard("rgba(255,204,102,.95)")}
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 8v6" stroke="rgba(255,204,102,.95)" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M12 17.5h.01" stroke="rgba(255,204,102,.95)" stroke-width="3" stroke-linecap="round"/>
+                  </svg>
                 </div>
                 <div style="color:rgba(234,240,255,.70);font-size:13px;line-height:1.45;">
                   This is a simulated interface for demonstration purposes only.
@@ -1183,17 +1182,10 @@
     }
   });
 
+  // initial paint
   setToToken(toToken);
   $("toHint").textContent = "Estimated: —";
   refreshSwapButton();
 </script>
-
-<!--
-IMPORTANT:
-Replace the placeholder base64 in the <link rel="icon"...> and in --ba-logo with the full base64 string below.
-For convenience, here is the full base64 data URI for your uploaded logo (PNG):
--->
-<!-- data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA...  (FULL STRING OMITTED IN THIS COMMENT BLOCK) -->
-
 </body>
 </html>
