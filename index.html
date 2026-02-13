@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Swap Interface Demo</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #0e0e11;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+
+    .container {
+        background: #19191f;
+        padding: 30px;
+        border-radius: 16px;
+        width: 400px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.6);
+    }
+
+    h2 {
+        text-align: center;
+    }
+
+    select, input, button {
+        width: 100%;
+        margin-top: 12px;
+        padding: 10px;
+        border-radius: 8px;
+        border: none;
+        font-size: 14px;
+    }
+
+    button {
+        background: #6c5ce7;
+        color: white;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background: #5a4bd6;
+    }
+
+    .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.7);
+        display: none;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal-content {
+        background: white;
+        color: black;
+        padding: 20px;
+        border-radius: 12px;
+        width: 300px;
+        text-align: center;
+    }
+
+    .close-btn {
+        margin-top: 15px;
+        background: #111;
+        color: white;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Swap Demo</h2>
+
+    <button onclick="connectWallet()">Connect Wallet</button>
+
+    <select id="fromToken">
+        <option value="">Select From Token</option>
+        <option>ETH</option>
+        <option>USDC</option>
+        <option>DAI</option>
+    </select>
+
+    <select id="toToken">
+        <option value="">Select To Token</option>
+        <option>ETH</option>
+        <option>USDC</option>
+        <option>DAI</option>
+    </select>
+
+    <input type="number" id="amount" placeholder="Enter amount" />
+
+    <button onclick="executeSwap()">Swap</button>
+</div>
+
+<div class="modal" id="popupModal">
+    <div class="modal-content">
+        <div id="popupText"></div>
+        <button class="close-btn" onclick="closeModal()">Close</button>
+    </div>
+</div>
+
+<script>
+function showPopup(text) {
+    document.getElementById("popupText").innerText = text;
+    document.getElementById("popupModal").style.display = "flex";
+}
+
+function closeModal() {
+    document.getElementById("popupModal").style.display = "none";
+}
+
+function connectWallet() {
+    const message = prompt("Enter the text you want displayed after Connect Wallet:");
+    if (message) {
+        showPopup(message);
+    }
+}
+
+function executeSwap() {
+    const from = document.getElementById("fromToken").value;
+    const to = document.getElementById("toToken").value;
+    const amount = document.getElementById("amount").value;
+
+    if (!from || !to || !amount) {
+        alert("Complete all fields before swapping.");
+        return;
+    }
+
+    const message = prompt("Enter the text you want displayed after Swap:");
+    if (message) {
+        showPopup(message);
+    }
+}
+</script>
+
+</body>
+</html>
